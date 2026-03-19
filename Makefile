@@ -129,30 +129,6 @@ code/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/build
 .PHONY : code/fast
 
-bpt.o: bpt.cpp.o
-.PHONY : bpt.o
-
-# target to build an object file
-bpt.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/bpt.cpp.o
-.PHONY : bpt.cpp.o
-
-bpt.i: bpt.cpp.i
-.PHONY : bpt.i
-
-# target to preprocess a source file
-bpt.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/bpt.cpp.i
-.PHONY : bpt.cpp.i
-
-bpt.s: bpt.cpp.s
-.PHONY : bpt.s
-
-# target to generate assembly for a file
-bpt.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/bpt.cpp.s
-.PHONY : bpt.cpp.s
-
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -186,9 +162,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... code"
-	@echo "... bpt.o"
-	@echo "... bpt.i"
-	@echo "... bpt.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

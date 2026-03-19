@@ -1,13 +1,13 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "bpt.h"
+#include "simple_bpt.h"
 
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
 
-    BPT tree("database.db");
+    SimpleBPT tree("database.db");
 
     int n;
     std::cin >> n;
