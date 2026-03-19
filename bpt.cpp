@@ -1,7 +1,7 @@
 #include "bpt.h"
 #include <iostream>
 
-const int HEADER_SIZE = 1024;
+const int HEADER_SIZE = sizeof(int) * 3;  // root_pos, node_count, free_list
 
 BPT::BPT(const std::string& filename) : filename(filename), root_pos(-1), node_count(0), free_list(-1) {
     file.open(filename, std::ios::in | std::ios::out | std::ios::binary);
@@ -18,10 +18,24 @@ BPT::BPT(const std::string& filename) : filename(filename), root_pos(-1), node_c
         file.write(reinterpret_cast<const char*>(&free_list), sizeof(free_list));
         file.flush();
     } else {
-        // Read header
-        file.read(reinterpret_cast<char*>(&root_pos), sizeof(root_pos));
-        file.read(reinterpret_cast<char*>(&node_count), sizeof(node_count));
-        file.read(reinterpret_cast<char*>(&free_list), sizeof(free_list));
+        // Check if file has valid header data
+        file.seekg(0, std::ios::end);
+        std::streampos file_size = file.tellg();
+
+        if (file_size >= HEADER_SIZE) {
+            // Read header
+            file.seekg(0);
+            file.read(reinterpret_cast<char*>(&root_pos), sizeof(root_pos));
+            file.read(reinterpret_cast<char*>(&node_count), sizeof(node_count));
+            file.read(reinterpret_cast<char*>(&free_list), sizeof(free_list));
+        } else {
+            // Write header if file is empty or corrupted
+            file.seekp(0);
+            file.write(reinterpret_cast<const char*>(&root_pos), sizeof(root_pos));
+            file.write(reinterpret_cast<const char*>(&node_count), sizeof(node_count));
+            file.write(reinterpret_cast<const char*>(&free_list), sizeof(free_list));
+            file.flush();
+        }
     }
 }
 
@@ -68,9 +82,11 @@ int BPT::read_node(int pos, Node& node) {
 }
 
 void BPT::write_node(int pos, const Node& node) {
-    file.seekp(pos);
-    file.write(reinterpret_cast<const char*>(&node), sizeof(Node));
-    file.flush();
+    if (pos >= 0) {
+        file.seekp(pos);
+        file.write(reinterpret_cast<const char*>(&node), sizeof(Node));
+        file.flush();
+    }
 }
 
 int BPT::find_leaf(const std::string& key) {

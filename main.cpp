@@ -39,7 +39,6 @@ int main() {
             if (values.empty()) {
                 std::cout << "null\n";
             } else {
-                std::sort(values.begin(), values.end());
                 for (size_t j = 0; j < values.size(); j++) {
                     if (j > 0) std::cout << " ";
                     std::cout << values[j];

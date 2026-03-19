@@ -50,7 +50,7 @@ struct Node {
     int parent;
     int next;  // For leaf nodes, points to next leaf
     int prev;  // For leaf nodes, points to previous leaf
-    KeyValue keys[MAX_KEYS + 1];  // Extra space for temporary operations
+    KeyValue keys[MAX_KEYS + 2];  // Extra space for split operations
     int children[MAX_KEYS + 2];   // For internal nodes
 
     Node() : is_leaf(true), key_count(0), parent(-1), next(-1), prev(-1) {
